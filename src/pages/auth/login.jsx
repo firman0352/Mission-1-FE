@@ -1,10 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useAuthContext } from "../../components/AuthProvider";
 import AuthLayout from "./components/AuthLayout";
 import LoginForm from "./components/LoginForm";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuthContext();
 
   const handleLogin = async (formData) => {
     try {
@@ -17,9 +18,8 @@ const Login = () => {
       // For demo purposes, let's assume login is successful
       // In a real app, you'd validate credentials with your backend
       if (formData.username && formData.password) {
-        // Store user session/token
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('username', formData.username);
+        // Use the context login function
+        login({ username: formData.username });
         
         // Redirect to dashboard or home page
         navigate('/');

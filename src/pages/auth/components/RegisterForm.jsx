@@ -33,20 +33,10 @@ const RegisterForm = ({ onSubmit }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = "Nama lengkap tidak boleh kosong";
-    }
-    
     if (!formData.username.trim()) {
       newErrors.username = "Username tidak boleh kosong";
     } else if (formData.username.length < 3) {
       newErrors.username = "Username minimal 3 karakter";
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = "Email tidak boleh kosong";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Format email tidak valid";
     }
     
     if (!formData.password.trim()) {

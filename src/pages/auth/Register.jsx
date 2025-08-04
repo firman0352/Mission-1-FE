@@ -1,10 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useAuthContext } from "../../components/AuthProvider";
 import AuthLayout from "./components/AuthLayout";
 import RegisterForm from "./components/RegisterForm";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { login } = useAuthContext();
 
   const handleRegister = async (formData) => {
     try {
@@ -14,10 +15,9 @@ const Register = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // For demo purposes, let's assume registration is successful
-      if (formData.username && formData.email && formData.password) {
-        // Store user data
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('username', formData.username);
+      if (formData.username && formData.password) {
+        // Use the context login function
+        login({ username: formData.username });
         
         // Redirect to dashboard
         navigate('/');
