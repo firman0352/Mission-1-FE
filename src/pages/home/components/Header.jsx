@@ -6,7 +6,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const avatarRef = useRef(null);
-  const { logout } = useAuthContext();
+  const { isAuthenticated, logout } = useAuthContext();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -106,47 +106,84 @@ const Header = () => {
             isDropdownOpen ? 'block' : 'hidden'
           } absolute right-0 top-[52px] w-[180px] bg-[#181A1C] text-white rounded-md shadow-lg border border-white/10 z-30 py-1`}
         >
-          <Link
-            to="/profile"
-            className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
-            onClick={() => setIsDropdownOpen(false)}
-          >
-            <svg
-              className="w-5 h-5 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4s-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z" />
-            </svg>
-            Profil Saya
-          </Link>
-          <Link
-            to="/premium"
-            className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
-            onClick={() => setIsDropdownOpen(false)}
-          >
-            <svg
-              className="w-5 h-5 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 17.27 18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z" />
-            </svg>
-            Ubah Premium
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition w-full text-left"
-          >
-            <svg
-              className="w-5 h-5 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H4v2h8.67l-2.58 2.59ZM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
-            </svg>
-            Keluar
-          </button>
+          {isAuthenticated ? (
+            // Authenticated user menu
+            <>
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4s-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z" />
+                </svg>
+                Profil Saya
+              </Link>
+              <Link
+                to="/premium"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 17.27 18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z" />
+                </svg>
+                Ubah Premium
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition w-full text-left"
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H4v2h8.67l-2.58 2.59ZM19 3H5a2 2 0 0 0-2 2v4h2V5h14v14H5v-4H3v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+                </svg>
+                Keluar
+              </button>
+            </>
+          ) : (
+            // Non-authenticated user menu
+            <>
+              <Link
+                to="/login"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5ZM20 19h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14Z" />
+                </svg>
+                Sign In
+              </Link>
+              <Link
+                to="/register"
+                className="flex items-center gap-2 px-4 py-2 hover:bg-[#2F3334] transition"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6ZM15 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z" />
+                </svg>
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
